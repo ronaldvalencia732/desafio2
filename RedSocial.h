@@ -23,7 +23,6 @@ private:
     void construirMatriz();
     void liberarMatriz();
 
-    // Métodos para persistencia en disco
     void cargarUsuariosDisco();
     void cargarAlbumesDisco();
     void cargarFotosDisco();

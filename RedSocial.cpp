@@ -78,8 +78,6 @@ void RedSocial::liberarMatriz() {
     matrizLista = false;
 }
 
-// Pendiente lectura y escritua en archivos .txt
-
 void RedSocial::cargarUsuariosDisco() {}
 void RedSocial::cargarAlbumesDisco() {}
 void RedSocial::cargarFotosDisco() {}
@@ -90,7 +88,6 @@ void RedSocial::cargarSolicitudesDisco() {}
 void RedSocial::cargarDatos() {
     iniciarMedicion();
 
-    // Inicialización de 3 usuarios de demostración en RAM para probar el programa
     Fecha fnac(15, 8, 2000);
     Fecha finsc(1, 2, 2024);
 
@@ -152,7 +149,6 @@ void RedSocial::guardarDatos() {
     guardarSolicitudesDisco();
     detenerMedicion("Guardar Datos en Disco");
 }
-
 
 bool RedSocial::iniciarSesion() {
     iniciarMedicion();
@@ -493,28 +489,14 @@ void RedSocial::leerNuevosMensajes() {
     detenerMedicion("Leer Mensajes");
 }
 
+// Falta funcionalidad de filtro de mensajes por rango de fecha
 void RedSocial::buscarMensajePorFecha() {
     iniciarMedicion();
     if (!usuarioSesion) return;
 
-    int d1, m1, a1, d2, m2, a2;
-    cout << "\nFecha inicial (Día Mes Año): ";
-    cin >> d1 >> m1 >> a1;
-    cout << "Fecha final (Día Mes Año): ";
-    cin >> d2 >> m2 >> a2;
-
-    Fecha inicio(d1, m1, a1);
-    Fecha fin(d2, m2, a2);
-
     cout << "\n=== FILTRO DE MENSAJES POR FECHA ===" << endl;
-    int cant = usuarioSesion->getNumRecibidos();
-    for (int i = 0; i < cant; i++) {
-        registrarIteracion();
-        Mensaje* m = usuarioSesion->getMensajeRecibido(i);
-        if (m && m->estaEnRango(inicio, fin)) {
-            m->mostrarContenido();
-        }
-    }
+    cout << "Esta opcion no se encuentra disponible temporalmente." << endl;
+
     detenerMedicion("Buscar Mensajes por Fecha");
 }
 
