@@ -105,6 +105,8 @@ void RedSocial::cargarDatos() {
     directorioUsuarios[numUsuarios++] = u3;
 
     Fecha hoy(17, 10, 2026);
+
+    // Album para Juanito
     Album a1("Cartagena2026", "/albums/Cartagena/", "amigos");
     Foto f1(hoy, 2.5f, "/Cartagena/Malecon.png", 10);
     Foto f2(hoy, 3.1f, "/Cartagena/Bocagrande.png", 20);
@@ -112,8 +114,15 @@ void RedSocial::cargarDatos() {
     a1.agregarFotografia(f1);
     a1.agregarFotografia(f2);
     a1.agregarFotografia(f3);
-
     u1->crearAlbum(a1);
+
+    // Album para Maria (para la prueba del video)
+    Album a2("PaseoMedellin", "/albums/Medellin/", "amigos");
+    Foto f4(hoy, 2.0f, "/Medellin/ParqueArvi.png", 12);
+    Foto f5(hoy, 1.5f, "/Medellin/PlazaBotero.png", 25);
+    a2.agregarFotografia(f4);
+    a2.agregarFotografia(f5);
+    u2->crearAlbum(a2);
 
     Mensaje m1("juanito", "maria", "Hola Maria, bienvenida a la plataforma", hoy);
     u1->registrarMensajeEnviado(m1);
@@ -304,7 +313,7 @@ void RedSocial::visitarPerfilAmigo() {
     if (!usuarioSesion) return;
 
     char nombreAmigo[100];
-    cout << "\nNombre del amigo a visitar: ";
+    cout << "\nNombre del usuario a visitar: ";
     cin >> nombreAmigo;
 
     Usuario* amg = buscarUsuarioPorNombre(nombreAmigo);
@@ -314,24 +323,26 @@ void RedSocial::visitarPerfilAmigo() {
         return;
     }
 
+    bool esMismoUsuario = (usuarioSesion == amg);
     bool esAmigo = usuarioSesion->esAmigoDe(amg);
+
     cout << "\n=== PERFIL DE " << amg->getNombreUsuario() << " ===" << endl;
     amg->listarAlbumes();
 
     int cant = amg->getNumAlbumes();
     if (cant > 0) {
-        cout << "Selecciona el álbum a ver en carrusel (0 para volver): ";
+        cout << "Selecciona el album a ver en carrusel (0 para volver): ";
         int sel;
         cin >> sel;
 
         if (sel > 0 && sel <= cant) {
             Album* alb = amg->getAlbumPorIndice(sel - 1);
             if (alb) {
-                const char* rol = esAmigo ? "amigo" : "otro";
-                if (alb->esVisiblePara(rol)) {
+                const char* rol = esMismoUsuario ? "propietario" : (esAmigo ? "amigo" : "otro");
+                if (esMismoUsuario || alb->esVisiblePara(rol)) {
                     abrirCarrusel(*alb);
                 } else {
-                    cout << "Álbum privado. No cuentas con permisos de visualización." << endl;
+                    cout << "Album privado. No cuentas con permisos de visualizacion." << endl;
                 }
             }
         }
